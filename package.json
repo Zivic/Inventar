@@ -1,0 +1,29 @@
+{
+  "name": "inventar",
+  "version": "1.0.0",
+  "description": "Web aplikacija za kontrolu inventara",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "nodemon --ignore './inventar/' ./backend/server.js",
+    "frontend": "npm start --prefix inventar"
+  },
+  "author": "NoTeam",
+  "license": "ISC",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.5.1",
+    "@types/react": "^17.0.3",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "create-react-app": "^4.0.3",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.5",
+    "mongoose": "^5.12.0",
+    "nodemon": "^2.0.7",
+    "react": "^17.0.1",
+    "redux": "^4.0.5",
+    "socket.io": "^4.1.2",
+    "validation": "^0.0.1"
+  }
+}

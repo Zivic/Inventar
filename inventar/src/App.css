@@ -1,0 +1,160 @@
+/* Predefinisi bootstrap ovde */
+
+.containerZaForme {
+  margin: 0.5rem;
+  padding: 1rem;
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  width: 75%;
+  border: 0.1rem solid #ececec;
+  border-width: 0.1rem 0.1rem 0;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+}
+
+.chatbox{
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 40%;
+  border: solid lightgray;
+  border-width: 0.1rem 0.1rem 0.1rem;
+  border-radius: 8px 8px 8px 8px;
+
+}
+
+.between{
+  margin-bottom: 0.3rem;
+}
+
+.chatRow{
+  width: 100%
+}
+.UILightGray{
+  background-color: #EEEEEE;
+}
+
+
+.UIWhite{
+  background-color: white;
+}
+
+.UIBlue{
+  background-color: #14213D;
+  color:rgb(227, 233, 240);
+}
+.UIOrange{
+  background-color: #FCA311;
+}
+.UIGray{
+  background-color: #E5E5E5;
+}
+
+.blueBerry{
+  background-color: #0B2559;
+}
+
+.containerNice {
+  margin: 0.5rem;
+  padding: 1rem;
+  width: 100%;
+  border: solid lightgray;
+  border-width: 0.1rem 0.1rem 0;
+  border-radius: 8px 8px 0 0;
+}
+.myCard {
+  box-shadow: 0 0 20px 8px #d0d0d0;
+  border-radius: 20px;
+  padding: 2rem;
+  background-color: white;
+}
+.active{
+  background-color:#c93939;
+ }
+.btn,
+.form-control,
+.smallFont {
+  font-size: x-small;
+}
+body {
+  /* background: url(./img/escheresque_ste.png) repeat 0 0; */
+  font-size: x-small;
+}
+
+.fancyBG {
+  background: url(./img/escheresque_ste.png) repeat 0 0;
+}
+
+.slide-right {
+  left:-100px;
+	-webkit-animation: slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.scale-in-tl {
+	-webkit-animation: scale-in-tl 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: scale-in-tl 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+
+/**
+ * ----------------------------------------
+ * animation slide-right
+ * ----------------------------------------
+ */
+ @-webkit-keyframes slide-right {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(100px);
+            transform: translateX(100px);
+  }
+}
+@keyframes slide-right {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(100px);
+            transform: translateX(100px);
+  }
+}
+
+/**
+ * ----------------------------------------
+ * animation scale-in-tl
+ * ----------------------------------------
+ */
+ @-webkit-keyframes scale-in-tl {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    opacity: 1;
+  }
+}
+@keyframes scale-in-tl {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: 0% 0%;
+            transform-origin: 0% 0%;
+    opacity: 1;
+  }
+}
