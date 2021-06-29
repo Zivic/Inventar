@@ -10,6 +10,7 @@ import {
 const Navigation = () => {
   const korisnikStore = useSelector(selectKorisnik).payload;
   const imeIPrezime = korisnikStore.ime + " " + korisnikStore.prezime;
+  console.error(korisnikStore);
   return (
     <>
       <Navbar bg="dark" variant="dark">
@@ -18,9 +19,10 @@ const Navigation = () => {
           <Nav.Link href="#home">Home</Nav.Link>
           <Nav.Link href="#features">Features</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link>
+          {korisnikStore.tip !== 'Radnik' &&
           <NavLink to="/menadzerDashboard" className="btn btn-primary">
             Alerti <Badge variant="light">9</Badge>
-          </NavLink>
+          </NavLink>}
           <NavLink to="/menadzerDashboard" className="btn btn-primary">
             Poruke <Badge variant="light">20</Badge>
           </NavLink>

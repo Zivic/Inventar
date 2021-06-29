@@ -52,7 +52,7 @@ const DozvolaPristupa = (props) => {
 
     if (podaciRadnika)
       axios
-        .get("http://localhost:3001/api/skladista/")
+        .get("http://localhost:3001/api/skladista/" + idPreduzeca)
         .then((res) => {
           console.log(res);
           console.log(res.data);
