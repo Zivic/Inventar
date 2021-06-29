@@ -2,10 +2,17 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
-
+import {
+  setKorisnikData,
+  selectKorisnik,
+} from "../features/korisnik/korisnikSlice";
+import { useSelector, useDispatch } from "react-redux";
 //TODO: stil, validacija
 
 const AddNewKategorija = () => {
+  const korisnikStore = useSelector(selectKorisnik).payload;
+
+
   const [atributi, setAtributi] = useState([]);
 
   const addNewAtribut = (nazivNovogAtributa) => {
@@ -42,7 +49,10 @@ const AddNewKategorija = () => {
     const podaci = {
       naziv: document.querySelector(`[id^='formaKategorijaNaziv']`).value,
       atributi: [],
+      id_preduzeca: korisnikStore.id_preduzeca
+     
     };
+    debugger;
     atributi.forEach((atribut, index) => {
       const atributObjekat = {
         ime: document.querySelector(`[id^='formaKategorijaAtribut${index}']`).value,
@@ -62,7 +72,6 @@ const AddNewKategorija = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitted new kategorija");
-
     axios
       .post("http://localhost:3001/api/kategorije/", {
         headers: { "Content-Type": "application/json" },

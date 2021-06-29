@@ -39,6 +39,12 @@ router.get("/:id", (req, res) => {
     .catch((err) => res.status(404).json({ error: "Not found" }));
 });
 
+router.get("/preduzece/:idPreduzeca", (req, res) => {
+  Kategorija.find({id_preduzeca: req.params.idPreduzeca})
+    .then((data) => res.json(data))
+    .catch((err) => res.status(404).json({ error: "Not found" }));
+});
+
 // @route PUT api/kategorije/:id
 // @description Update kategorija
 // @access Public

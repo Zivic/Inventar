@@ -33,7 +33,7 @@ const Proizvod = (props) => {
         .catch((err) => console.log(err));
 
     axios
-      .get("http://localhost:3001/api/kategorije/")
+      .get("http://localhost:3001/api/kategorije/preduzece/" + korisnikStore.id_preduzeca)
       .then((res) => {
         console.log(res);
         console.log(res.data);
