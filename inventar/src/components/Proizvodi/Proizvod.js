@@ -426,6 +426,7 @@ const Proizvod = (props) => {
           </Form.Group>
         );
       })}
+ { korisnikStore.tip !== 'Radnik' &&    <>
       <h4>Alert</h4>
 
       <Form.Check
@@ -443,6 +444,7 @@ const Proizvod = (props) => {
         defaultValue={0}
         disabled={!alertiProizvoda}
       ></Form.Control>
+      </>}
     </>
   );
 

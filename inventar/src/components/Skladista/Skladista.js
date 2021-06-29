@@ -29,8 +29,6 @@ const Skladista = () => {
     }, 0);
   };
 
-
-
   useEffect(() => {
     console.log("USEEFFECT AXIOS");
     axios
@@ -44,35 +42,37 @@ const Skladista = () => {
   }, []);
 
   let PrikazJSX = (
-    <div className = ' row align-items-center'>
-      <div className = 'align-items-center'>
-      <DonutGraph
-        labels={podaciSkladista?.map((skladiste) => {
-          return skladiste.naziv;
-        })}
-        vrednosti={podaciSkladista.map((skladiste) => {
-          return reducerZaBrojProizvoda(skladiste);
-        })}
-      />
+    <div className=" row align-items-center">
+      <div className="align-items-center">
+        <DonutGraph
+          labels={podaciSkladista?.map((skladiste) => {
+            return skladiste.naziv;
+          })}
+          vrednosti={podaciSkladista.map((skladiste) => {
+            return reducerZaBrojProizvoda(skladiste);
+          })}
+        />
       </div>
-      <div className = 'ml-5'>
-      {podaciSkladista.map((skladiste) => {
-        return (
-          <SkladisteCard
-            title={skladiste.naziv}
-            subtitle={skladiste.adresa}
-            text1={"default text"}
-            text2={"Različitih proizvoda: " + skladiste.proizvodi.length}
-            text3={
-              "Ukupno proizvoda u skladistu: " +
-              reducerZaBrojProizvoda(skladiste)
-            }
-          />
-        );
-      })}
-      <Button variant="primary" type="" onClick={(e) => handleDodaj(e)}>
-        Dodaj skladiste
-      </Button>
+      <div className="ml-5">
+        {podaciSkladista.map((skladiste) => {
+          return (
+            <SkladisteCard
+              title={skladiste.naziv}
+              subtitle={skladiste.adresa}
+              text1={"default text"}
+              text2={"Različitih proizvoda: " + skladiste.proizvodi.length}
+              text3={
+                "Ukupno proizvoda u skladistu: " +
+                reducerZaBrojProizvoda(skladiste)
+              }
+            />
+          );
+        })}
+        {korisnikStore.tip !== "Radnik" && (
+          <Button variant="primary" type="" onClick={(e) => handleDodaj(e)}>
+            Dodaj skladiste
+          </Button>
+        )}
       </div>
     </div>
   );
