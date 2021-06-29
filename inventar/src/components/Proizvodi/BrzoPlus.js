@@ -70,6 +70,7 @@ const BrzoPlus = (props) => {
     e.preventDefault();
 
     let data = await getDataFromInputs();
+    debugger;
     let promene = [];
     let idPreduzeca = korisnikStore.id_preduzeca;
     let idKorisnika = korisnikStore.id_korisnika;
@@ -92,7 +93,7 @@ const BrzoPlus = (props) => {
         console.log("razlikuje se !");
         console.log(kolicinaObjekat);
         console.log(inicijalnaKolicina);
-
+        debugger;
         kolicinaObjekat.kolicina =  parseInt(kolicinaObjekat.kolicina) + novaKolicina[0].kolicina_proizvoda;
         promene.push({
           //id_korisnika: korisnikStore.id,
@@ -102,6 +103,10 @@ const BrzoPlus = (props) => {
           naziv_skladista: kolicinaObjekat.naziv,
         });
       }
+      else{
+        kolicinaObjekat.kolicina = novaKolicina[0].kolicina_proizvoda;
+      }
+
     });
     console.log(promene);
     debugger;

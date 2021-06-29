@@ -101,6 +101,9 @@ const BrzoMinus = (props) => {
           naziv_skladista: kolicinaObjekat.naziv,
         });
       }
+      else{
+        kolicinaObjekat.kolicina = novaKolicina[0].kolicina_proizvoda;
+      }
     });
     console.log(promene);
     debugger;
