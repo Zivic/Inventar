@@ -22,6 +22,9 @@ const Proizvod = (props) => {
   let initialValues = null;
 
   useEffect(() => {
+
+    var tempPodaciProizvoda = null;
+
     if (idProizvoda)
       axios
         .get("http://localhost:3001/api/proizvodi/" + idProizvoda)
@@ -29,6 +32,7 @@ const Proizvod = (props) => {
           console.log(res);
           console.log(res.data);
           setPodaciProizvoda(() => res.data);
+          tempPodaciProizvoda = res.data;
         })
         .catch((err) => console.log(err));
 
@@ -38,6 +42,22 @@ const Proizvod = (props) => {
         console.log(res);
         console.log(res.data);
         setkategorije(() => res.data);
+
+        console.log(idProizvoda)
+        //debugger;
+        if(! idProizvoda){
+          console.log(res.data[0])
+          //debugger;
+          setAktivnaKategorija([res.data[0]])
+
+        }
+        else{
+          setAktivnaKategorija(res.data.filter((kat) => {
+            console.error(tempPodaciProizvoda)
+           return  kat.naziv == tempPodaciProizvoda?.kategorija
+          }))
+
+        }
       })
       .catch((err) => console.log(err));
 
@@ -49,6 +69,9 @@ const Proizvod = (props) => {
         setSkladista(() => res.data);
       })
       .catch((err) => console.log(err));
+
+
+
   }, []);
 
   useEffect(() => {
@@ -63,6 +86,10 @@ const Proizvod = (props) => {
         )
       );
     }
+
+    // else if(kategorije){
+    //   setAktivnaKategorija([kategorije[0]])
+    // }
   }, [kategorije]);
 
   useEffect(() => {
