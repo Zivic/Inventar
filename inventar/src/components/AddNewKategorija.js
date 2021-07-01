@@ -1,7 +1,9 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
-import { useState } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
+import { useState, useRef } from "react";
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
+
 import {
   setKorisnikData,
   selectKorisnik,
@@ -11,9 +13,12 @@ import { useSelector, useDispatch } from "react-redux";
 
 const AddNewKategorija = () => {
   const korisnikStore = useSelector(selectKorisnik).payload;
+  let history = useHistory();
 
 
   const [atributi, setAtributi] = useState([]);
+  const [alert, setAlert] = useState(null);
+  const alertRef = useRef();
 
   const addNewAtribut = (nazivNovogAtributa) => {
     setAtributi(() => {
@@ -26,6 +31,26 @@ const AddNewKategorija = () => {
       ];
     });
   };
+
+  const redirect = () => {
+    history.push('/skladista')
+  }
+
+
+  const activateAlert = (variant, message) => {
+    setAlert({
+      variant: variant,
+      message: message
+    });
+    setTimeout(() => {
+      alertRef.current.className  = alertRef.current.className.replace('scale-in-tl','scale-out-tl');
+      //setAlert(false);
+    },2500)
+    setTimeout(() => {
+      //setAlert(false);
+      redirect();
+    },3000)
+  }
 
   const addNewAtributField = (redniBroj) => {
     const a = [...atributi];
@@ -77,8 +102,16 @@ const AddNewKategorija = () => {
         headers: { "Content-Type": "application/json" },
         data: JSON.stringify(getDataFromInputs()),
       })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log(res)
+        activateAlert("success", "Nova kategorija uspesno dodata!");
+
+      })
+      .catch((err) => {
+        console.log(err)
+        activateAlert("error", "Doslo je do greske prilikom dodavanja nove kategorije!");
+
+      });
   };
 
   const renderJSX = (
@@ -176,6 +209,7 @@ const AddNewKategorija = () => {
       }}
     >
       {renderJSX}
+      {alert && <Alert variant={alert.variant} ref = {alertRef} className ='scale-in-tl '>{alert.message}</Alert>}
     </div>
   );
 };

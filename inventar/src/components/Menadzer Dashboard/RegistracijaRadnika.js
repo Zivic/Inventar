@@ -1,12 +1,15 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 const RegistracijaRadnika = (props) => {
   const { handleBack, idPreduzeca } = props;
 
   const [podaciKorisnika, setPodacikorisnika] = useState(null);
+  const [alert, setAlert] = useState(null);
+  const alertRef = useRef();
+
   let podaciPreduzeca = null; //Ovo radi bolje nego state
 
   let ime = React.createRef();
@@ -14,6 +17,21 @@ const RegistracijaRadnika = (props) => {
   let emailKorisnika = React.createRef();
   let password = React.createRef();
   let passwordConfirm = React.createRef();
+
+  const activateAlert = (variant, message) => {
+    setAlert({
+      variant: variant,
+      message: message
+    });
+    setTimeout(() => {
+      alertRef.current.className  = alertRef.current.className.replace('scale-in-tl','scale-out-tl');
+      //setAlert(false);
+    },2500)
+    setTimeout(() => {
+      //setAlert(false);
+      handleBack();
+    },3000)
+  }
 
   const handleZavrsi = (e) => {
     e.preventDefault();
@@ -59,8 +77,14 @@ const RegistracijaRadnika = (props) => {
           headers: { "Content-Type": "application/json" },
           data: JSON.stringify(lokalniPodaciKorisnika),
         })
-        .then((res) => {console.log(res)})
-        .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res)
+          activateAlert("success", "Radnik uspesno dodat!");
+        })
+        .catch((err) => {
+          console.log(err)
+          activateAlert("error", "Doslo je do greske prilikom dodavanja radnika!");
+        });
     }
   };
 
@@ -116,6 +140,7 @@ const RegistracijaRadnika = (props) => {
   );
 
   return (
+    <div>
     <div className="d-flex">
       <div className="d-flex col-6 justify-content-center align-items-center">
         <div className="col-sm-10 col-md-8">
@@ -123,8 +148,13 @@ const RegistracijaRadnika = (props) => {
           <br />
           {prviJSX}
         </div>
+
       </div>
+
       {/* <div className="col-6 fancyBG" style={{ height: "100vh" }}></div> */}
+    </div>
+    {alert && <Alert variant={alert.variant} ref = {alertRef} className ='scale-in-tl '>{alert.message}</Alert>}
+
     </div>
   );
 };

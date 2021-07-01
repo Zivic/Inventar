@@ -1,6 +1,6 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 const Registracija = (props) => {
@@ -9,6 +9,9 @@ const Registracija = (props) => {
 
   const [page, setPage] = useState(1);
   const [podaciKorisnika, setPodacikorisnika] = useState(null);
+  const [alert, setAlert] = useState(null);
+  const alertRef = useRef();
+
   let podaciPreduzeca = null; //Ovo radi bolje nego state
 
   let ime = React.createRef();
@@ -30,6 +33,21 @@ const Registracija = (props) => {
       adresaPreduzeca.current.value="";
     }
   },[page])
+
+  const activateAlert = (variant, message) => {
+    setAlert({
+      variant: variant,
+      message: message
+    });
+    setTimeout(() => {
+      alertRef.current.className  = alertRef.current.className.replace('scale-in-tl','scale-out-tl');
+      //setAlert(false);
+    },2500)
+    setTimeout(() => {
+      //setAlert(false);
+      handleBack();
+    },3000)
+  }
 
   const handleNastavi = (e) => {
     e.preventDefault();
@@ -103,8 +121,14 @@ const Registracija = (props) => {
         headers: { "Content-Type": "application/json" },
         data: JSON.stringify(lokalniPodaciKorisnika),
       })
-      .then((res) => {console.log(res)})
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log(res)
+        activateAlert("success", "Nalog i preduzece uspesno dodato!");
+      })
+      .catch((err) => {
+        console.log(err)
+        activateAlert("error", "Doslo je do greske prilikom dodavanja naloga i preduzeca!");
+      });
 
     })
     .catch((err) => console.log(err));
@@ -208,7 +232,7 @@ const Registracija = (props) => {
     </Form>
   );
 
-  return (
+  return (<>
     <div className="d-flex">
       <div className="d-flex col-6 justify-content-center align-items-center">
         <div className="col-sm-10 col-md-8">
@@ -216,9 +240,11 @@ const Registracija = (props) => {
           <br />
           {page == 1 ? prviJSX : drugiJSX}
         </div>
+        {alert && <Alert variant={alert.variant} ref = {alertRef} className ='scale-in-tl '>{alert.message}</Alert>}
       </div>
       <div className="col-6 fancyBG" style={{ height: "100vh" }}></div>
     </div>
+    </>
   );
 };
 

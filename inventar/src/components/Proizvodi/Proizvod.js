@@ -1,7 +1,9 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   setKorisnikData,
@@ -17,7 +19,12 @@ const Proizvod = (props) => {
   const [podaciProizvoda, setPodaciProizvoda] = useState(null);
   const [alertiProizvoda, setAlertiProizvoda] = useState(false);
 
+  const [alert, setAlert] = useState(null);
+  const alertRef = useRef();
+
+
   const korisnikStore = useSelector(selectKorisnik).payload;
+  let history = useHistory();
 
   let initialValues = null;
 
@@ -104,6 +111,27 @@ const Proizvod = (props) => {
         if (domObject) domObject.value = vrednostAtributa;
       });
   }, [aktivnaKategorija]);
+
+  const redirect = () => {
+    history.push('/skladista')
+  }
+
+  const activateAlert = (variant, message) => {
+    setAlert({
+      variant: variant,
+      message: message
+    });
+    setTimeout(() => {
+      alertRef.current.className  = alertRef.current.className.replace('scale-in-tl','scale-out-tl');
+      //setAlert(false);
+    },2500)
+    setTimeout(() => {
+      //setAlert(false);
+      //handleBack(null);
+      //TODO: REDIRECT TO TABLE
+      redirect();
+    },3000)
+  }
 
   const handleChangeKategorije = (e) => {
     //TODO: menja lokalni state, aktivnu kategoriju
@@ -335,16 +363,29 @@ const Proizvod = (props) => {
           headers: { "Content-Type": "application/json" },
           data: JSON.stringify(combinedData),
         })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res);
+          activateAlert("success", "Izmene su uspesno sacuvane!");
+        })
+        .catch((err) => {
+          console.log(err);
+          activateAlert("error", "Doslo je do greske prilikom cuvanja izmena!");
+        });
     } else
       axios
         .post("http://localhost:3001/api/proizvodi/", {
           headers: { "Content-Type": "application/json" },
           data: JSON.stringify(data),
         })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res)
+          activateAlert("success", "Nov proizvod je uspesno dodat!");
+        })
+        .catch((err) => {
+          console.log(err)
+          activateAlert("error", "Doslo je do greske prilikom dodavanja novog proizvoda!");
+
+        });
   };
 
   const kategorijaJSX = (
@@ -504,7 +545,7 @@ const Proizvod = (props) => {
   const renderJSX = (
     <>
       {/* {console.log(kategorije)} */}
-      <h2>Dodavanje novog proizvoda</h2>
+      {idProizvoda ? <h2>Editovanje proizvoda</h2> : <h2>Dodavanje novog proizvoda</h2>}
       <br />
       <Form className="row p-3 justify-content-between">
         <div
@@ -551,6 +592,7 @@ const Proizvod = (props) => {
       }}
     >
       {renderJSX}
+      {alert && <Alert variant={alert.variant} ref = {alertRef} className ='scale-in-tl '>{alert.message}</Alert>}
     </div>
   );
 };

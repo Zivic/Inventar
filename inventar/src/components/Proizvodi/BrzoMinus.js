@@ -1,8 +1,9 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
 
 import {
   setKorisnikData,
@@ -12,6 +13,10 @@ import {
 const BrzoMinus = (props) => {
   const { targetovanProizvod } = props;
   const [skladista, setSkladista] = useState([]);
+
+  const [alert, setAlert] = useState(null);
+  const alertRef = useRef();
+  let history = useHistory();
 
   const korisnikStore = useSelector(selectKorisnik).payload;
 
@@ -25,6 +30,25 @@ const BrzoMinus = (props) => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const redirect = () => {
+    history.push('/skladista')
+  }
+
+  const activateAlert = (variant, message) => {
+    setAlert({
+      variant: variant,
+      message: message
+    });
+    setTimeout(() => {
+      alertRef.current.className  = alertRef.current.className.replace('scale-in-tl','scale-out-tl');
+      //setAlert(false);
+    },2500)
+    setTimeout(() => {
+      //setAlert(false);
+      redirect();
+    },3000)
+  }
 
   const getVrednostProizvodaIzSkladista = (skladiste) => {
     //console.log(skladiste);
@@ -125,8 +149,16 @@ const BrzoMinus = (props) => {
           headers: { "Content-Type": "application/json" },
           data: JSON.stringify(combinedData),
         })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res)
+          activateAlert("success", "Izmene su uspesno sacuvane!");
+
+        })
+        .catch((err) => {
+          console.log(err)
+          activateAlert("error", "Doslo je do greske prilikom cuvanja izmena!");
+
+        });
   };
 
 
@@ -173,9 +205,16 @@ const BrzoMinus = (props) => {
           </div>
         );
       })}
+      <div>
       <Button className = 'float-right'variant="primary" type="submit" onClick={(e) => handleSubmit(e)}>
         Potvrdi
       </Button>
+      </div>
+      <div>
+      {alert && <Alert variant={alert.variant} ref = {alertRef} className ='scale-in-tl '>{alert.message}</Alert>}
+
+      </div>
+
     </>
   );
 };
