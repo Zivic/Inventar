@@ -5,6 +5,9 @@ const ChatPoruka = require("../../models/ChatPoruka");
 const Proizvod = require("../../models/Proizvod");
 
 
+
+
+
 const getMessagesFromPreduzece = async (idPreduzeca) => {
     var promise = new Promise((resolve,reject) => {
         ChatPoruka.find({id_preduzeca: idPreduzeca})

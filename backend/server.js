@@ -11,6 +11,10 @@ const histories = require('./routes/api/histories');
 const chatPoruke = require('./routes/api/chatPoruke');
 const connectDB = require('./config/db');
 
+//const Proizvod = require("./models/Proizvod");
+const ChatPoruka = require("./models/ChatPoruka");
+
+
 var cors = require('cors'); //import cors module
 const express = require('express');
 
@@ -43,10 +47,11 @@ app.get('/', (req, res) => {
 
 io.on("connection", socket => {
     //console.log(socket);
-
+    var idPreduzeca = null;
     socket.on("joinRoom", (chatRoomID) => {
         console.log('Joining room with id: ' + chatRoomID);
         socket.join(chatRoomID);
+        idPreduzeca = chatRoomID;
     })
 
     socket.on("disconnect", () => {
@@ -55,15 +60,30 @@ io.on("connection", socket => {
   
     socket.on("message", message => {
         console.log('[message received: ' + message + ' ]');
-      io.emit("message", message);
+      io.to(idPreduzeca).emit("message", message);
     });
 
     socket.on("messageData", messageData => {
         chatPoruke.addMessageToPreduzece(messageData);
     });
 
+    let unreadMessages = 0;
+    ChatPoruka.watch().on('change', data => {
+      if(data.fullDocument.id_preduzeca == idPreduzeca){
+        unreadMessages++;
+        console.log("Unread messages: " + unreadMessages);
+        socket.broadcast.to(idPreduzeca).emit("unreadMessages", unreadMessages);
+      }
+    }
+    )
+
+
 
   });
+
+  // Proizvod.watch().on('change', data => 
+  // console.log(data.updateDescription.updatedFields))
+
 
 app.listen(port, () => {
   console.log(`Inventar server is  listening at http://localhost:${port} ...`)

@@ -41,7 +41,7 @@ const ProizvodSchema = new mongoose.Schema({
     type: Object,
     default: null
   }],
-  kriticnaKolicina: {
+  kriticna_kolicina: {
     type: Number,
   },
 

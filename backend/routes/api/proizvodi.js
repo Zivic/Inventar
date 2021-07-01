@@ -148,6 +148,77 @@ const addNewHistoryEntry = (data, idpreduzeca, idproizvoda, idkorisnika) => {
     //res.status(400).json({ error: "Unable to add this item" });
   });
 }
+  
+
+
+
+router.get("/alerti/:idPreduzeca", (req, res) => {
+  console.log("ALERTI")
+  console.log(req.params.idPreduzeca);
+
+  let retVal = [];
+  let promises = [];
+
+  Proizvod.find({id_preduzeca: req.params.idPreduzeca})
+  .then((proizvodi) => {
+    proizvodi.forEach((proizvod) => {
+      promises.push(new Promise((resolve,rej)=> {
+
+  
+    console.log(proizvod.naziv)
+    console.log(proizvod.kriticna_kolicina || "FALSE")
+    if(proizvod.kriticna_kolicina){
+      console.log("ROUND")
+    Skladiste.find({id_preduzeca: req.params.idPreduzeca})
+    .then((skladista) => {
+      skladista.forEach((skladiste) => {
+      //console.log(skladiste)
+
+      skladiste.proizvodi.forEach((proizvodUSkladistu) => {
+        console.log(proizvodUSkladistu.id_proizvoda)
+        console.log(proizvod._id)
+
+        if(proizvodUSkladistu.id_proizvoda == proizvod._id){
+          console.log("PRONADJEN");
+          if(proizvodUSkladistu.kolicina_proizvoda <= proizvod.kriticna_kolicina){
+            retVal.push({
+              id_proizvoda: proizvod._id,
+              id_skladista: skladiste._id,
+              naziv_proizvoda: proizvod.naziv,
+              naziv_skladista: skladiste.naziv,
+              kriticna_kolicina: proizvod.kriticna_kolicina,
+              trenutna_kolicina: proizvodUSkladistu.kolicina_proizvoda
+            })
+          }
+        }
+      })
+    })
+  })
+  .then(() => {
+    resolve();
+  })
+    .catch((err) => console.error(err));
+  }
+}))
+})
+
+  })
+  .then((ret) => {
+    Promise.all(promises).then(() => {
+      console.log("RETVAL")
+      console.log(retVal)
+      res.json(retVal)
+
+    })
+
+
+
+
+  })
+  .catch((err) => console.error(err));
+})
+
+
 
 // @route GET api/proizvodi/:id
 // @description Get single proizvod by id

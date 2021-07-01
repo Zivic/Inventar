@@ -174,6 +174,7 @@ const Proizvod = (props) => {
             slike: imageURL,
             opis: document.getElementById("formaProizvod.ControlTextareaOpis")
               .value,
+            kriticna_kolicina: document.getElementById("formaProizvodKriticnaKolicina").value
           };
           skladista.forEach((skladiste, index) => {
             const vrednostInputa = document.getElementById(
@@ -467,6 +468,7 @@ const Proizvod = (props) => {
         Obavesti me ako kolicina u nekom skladistu padne ispod:{" "}
       </Form.Label>
       <Form.Control
+        id="formaProizvodKriticnaKolicina"
         type="number"
         defaultValue={0}
         disabled={!alertiProizvoda}
