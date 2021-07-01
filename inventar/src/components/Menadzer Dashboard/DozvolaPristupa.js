@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button, Table, Badge, Alert } from "react-bootstrap";
 import MaterialTable from "material-table";
 
@@ -18,7 +18,7 @@ const DozvolaPristupa = (props) => {
   const [podaciSkladista, setPodaciSkladista] = useState(null);
 
   const [alert, setAlert] = useState(null);
-
+  const alertRef = useRef();
   useEffect(() => {
     console.log("USEEFFECT");
     axios
@@ -135,8 +135,16 @@ const DozvolaPristupa = (props) => {
       message: message
     });
     setTimeout(() => {
-      setAlert(false);
-    },4000)
+      alertRef.current.className  = alertRef.current.className.replace('scale-in-tl','scale-out-tl');
+      //setAlert(false);
+    },2500)
+    setTimeout(() => {
+      //setAlert(false);
+      handleBack(null);
+    },3000)
+    // setTimeout(() => {
+    //   setAlert(false);
+    // },4000)
   }
 
   return (
@@ -212,7 +220,7 @@ const DozvolaPristupa = (props) => {
         Potvrdi
       </Button>
       <br/>
-      {alert && <Alert variant={alert.variant}>{alert.message}</Alert>}
+      {alert && <Alert variant={alert.variant} ref = {alertRef} className ='scale-in-tl '>{alert.message}</Alert>}
     </div>
   );
 };
