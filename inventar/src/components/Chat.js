@@ -64,7 +64,7 @@ const Chat = (props) => {
 
 
   return (
-    <div className = 'containerNice UIGray'>
+    <div className = 'containerNice UIGray fullHeight'>
       <h2>Chat</h2>
           <>
             <div className ='containerNice'>

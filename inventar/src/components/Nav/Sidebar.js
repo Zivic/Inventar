@@ -96,7 +96,8 @@ const Sidebar = () => {
           activeClassName="active"
           className="nav-link   "
         >
-          Chat
+          <i class="far fa-comment fa-fw"></i>
+          <span className=" ">Chat</span>
         </NavLink>
       </Nav>
     </div>

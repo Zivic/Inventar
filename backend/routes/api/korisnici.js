@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
     .then(async (data) => {
       data.forEach((korisnik) => {
 
-      await Preduzece.findById(korisnik.id_preduzeca)
+       Preduzece.findById(korisnik.id_preduzeca)
       .then((preduzece) => {
         console.log("ZZZZZZZZZZZZZZZZZ")
         console.log(preduzece)

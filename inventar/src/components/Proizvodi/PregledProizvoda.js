@@ -17,7 +17,7 @@ const PregledProizvoda = () => {
         border: "solid blue",
         borderWidth: ".1rem .1rem 0",
         borderRadius: "8px 8px 0 0",
-        height: "500px",
+        height: "100%",
       }}
     >
       Pregled proizvoda

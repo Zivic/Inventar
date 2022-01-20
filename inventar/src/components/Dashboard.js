@@ -118,7 +118,7 @@ const Dashboard = (props) => {
   }
 
   return (
-    <div
+    <div className="fullHeight"
       // style={{
       //   margin: ".5rem",
       //   //backgroundColor: "gray",

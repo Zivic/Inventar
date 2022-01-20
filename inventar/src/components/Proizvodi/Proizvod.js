@@ -587,7 +587,7 @@ const Proizvod = (props) => {
         border: " .1rem solid #ececec",
         borderWidth: ".1rem .1rem 0",
         borderRadius: "8px 8px 0 0",
-        //height: "500px",
+        height: "100%",
         position: "relative",
       }}
     >
