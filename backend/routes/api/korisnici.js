@@ -5,8 +5,30 @@ const Korisnik = require("../../models/Korisnik");
 const Preduzece = require("../../models/Preduzece");
 
 router.get("/", (req, res) => {
+  console.log('GET');
   Korisnik.find()
-    .then((data) => res.json(data))
+    .then(async (data) => {
+      data.forEach((korisnik) => {
+
+      await Preduzece.findById(korisnik.id_preduzeca)
+      .then((preduzece) => {
+        console.log("ZZZZZZZZZZZZZZZZZ")
+        console.log(preduzece)
+        data.nazivPreduzeca = preduzece.naziv
+        return data;
+      })
+      .then((ooo) => {
+        console.log(ooo.nazivPreduzeca)
+        res.json(ooo)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    })
+
+
+
+    })
     .catch((err) => res.status(404).json({ error: "Not found" }));
 });
 

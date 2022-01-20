@@ -10,7 +10,7 @@ const Inventar = () => {
     return (
         <div className="App">
           <Navigation />
-          <div className="flex row flex-nowrap">
+          <div className="flex row flex-nowrap fullHeight">
             <Sidebar />
             <Main />
           </div>

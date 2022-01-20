@@ -9,6 +9,7 @@ import Barkod  from "./Barkod/Barkod";
 import Home from "./Home";
 import MenadzerDashboard from "./Menadzer Dashboard/MenadzerDashboard";
 import Chat from "./Chat";
+import AdminDashboard from "./AdminDashboard";
 
 const Main = () => {
   return (
@@ -24,8 +25,10 @@ const Main = () => {
         <Route path="/menadzerDashboard" component={MenadzerDashboard} />
         <Route path="/barkod" component={Barkod} />
         <Route path="/chat" component={Chat} />
+        <Route path="/adminDashboard" component={AdminDashboard} />
 
-        <Route exact path="/" component={Home} />
+
+        <Route exact path="/" component={Skladista} />
       </Switch>
     </>
   );

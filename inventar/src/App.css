@@ -76,11 +76,26 @@
 .btn,
 .form-control,
 .smallFont {
-  font-size: x-small;
+  /* font-size: x-small; */
 }
-body {
+html,
+body,
+#root,
+.App,
+.fullHeight {
   /* background: url(./img/escheresque_ste.png) repeat 0 0; */
-  font-size: x-small;
+  /* font-size: x-small; */
+  height:100%;
+}
+.nav-link {
+  color:lightslategray;
+  margin-bottom: 0.5rem;
+}
+/*Font awesome */
+.fas,
+.far{
+  font-size: 1.5rem;
+  margin-right: 1.5rem;
 }
 
 .fancyBG {

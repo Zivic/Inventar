@@ -44,14 +44,14 @@ const Navigation = () => {
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="home">Inventar</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
+          {/* <Nav.Link href="#home">Home</Nav.Link>
           <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
-          {korisnikStore.tip !== "Radnik" && (
+          <Nav.Link href="#pricing">Pricing</Nav.Link> */}
+          {/* {korisnikStore.tip !== "Radnik" && (
             <NavLink to="/menadzerDashboard" className="btn btn-primary">
               Alerti <Badge variant="light">9</Badge>
             </NavLink>
-          )}
+          )} */}
           <NavLink to="/menadzerDashboard" className="btn btn-primary">
             Poruke <Badge variant="light">{numberOfUnreadMessages}</Badge>
           </NavLink>

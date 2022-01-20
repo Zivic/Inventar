@@ -14,56 +14,67 @@ const Sidebar = () => {
     <div
       className="col-md-3 col-sm-3 col-lg-2 slide-right"
       style={{
-        paddingLeft: "1rem",
-        paddingRight: "1rem",
-        backgroundColor: "#14213D",
+        paddingLeft: "2rem",
+        paddingRight: "2rem",
+        paddingTop: "2rem",
+        backgroundColor: "#FFFFFF",
         color: "#EEEEEE",
         fontWeight: "bold",
+        
       }}
     >
 
 
-      <Nav variant="pills" defaultActiveKey="/home" className="flex-column ">
+      <Nav variant="pills" defaultActiveKey="/skladista" className="flex-column ">
         <NavLink
           to="/skladista"
           activeClassName="active"
-          className="nav-link UIBlue"
+          className="nav-link "
         >
-          <i className="fas fa-warehouse fa-fw"></i>
-          <span className="ml-2">Skladista</span>
+          <i className="fas fa-warehouse fa-fw "></i>
+          <span className=" ">Skladista</span>
         </NavLink>
         <NavLink
           to="/noviProizvod"
           activeClassName="active"
-          className="nav-link UIBlue"
+          className="nav-link "
         >
           <i className="fas fa-plus fa-fw"></i>
-          <span className="ml-2">Dodaj novi proizvod</span>
+          <span className=" ">Dodaj novi proizvod</span>
         </NavLink>
         
         {korisnikStore.tip !== 'Radnik' && <NavLink
           to="/novaKategorija"
           activeClassName="active"
-          className="nav-link UIBlue"
+          className="nav-link "
         >
           <i className="far fa-plus-square fa-fw"></i>
-          <span className="ml-2">Dodaj novu kategoriju</span>
+          <span className=" ">Dodaj novu kategoriju</span>
         </NavLink>}
         <NavLink
           to="/pregledProizvoda"
           activeClassName="active"
-          className="nav-link UIBlue"
+          className="nav-link "
         >
           <i className="fas fa-table fa-fw"></i>
-          <span className="ml-2">Pregled proizvoda</span>
+          <span className=" ">Pregled proizvoda</span>
         </NavLink>
         {korisnikStore.tip !== 'Radnik' && <NavLink
           to="/menadzerDashboard"
           activeClassName="active"
-          className="nav-link UIBlue"
+          className="nav-link "
         >
           <i className="fas fa-table fa-fw"></i>
-          <span className="ml-2">Menadzer Dashboard</span>
+          <span className=" ">Menadzer Dashboard</span>
+          
+        </NavLink>}
+        {korisnikStore.tip === 'Administrator' && <NavLink
+          to="/adminDashboard"
+          activeClassName="active"
+          className="nav-link "
+        >
+          <i className="fas fa-table fa-fw"></i>
+          <span className=" ">Admin Dashboard</span>
           
         </NavLink>}
         {/* <NavLink
@@ -83,7 +94,7 @@ const Sidebar = () => {
         <NavLink
           to="/chat"
           activeClassName="active"
-          className="nav-link UIBlue"
+          className="nav-link   "
         >
           Chat
         </NavLink>
