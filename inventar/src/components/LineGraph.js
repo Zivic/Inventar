@@ -124,8 +124,16 @@ labelArray.push(new Date(Date.now()))
 
   const dataSetovi = [];
   let index = 0;
+  //debugger;
   for (var key in vrednosti) {
     let rnd1 = Math.random() * 255;
+    debugger;
+    let broj = vrednosti[key].length -1;
+    let dodatnaTacka = vrednosti[key][broj];
+    let novoX = new Date(Date.now()).toISOString();
+    dodatnaTacka.x = novoX;
+    vrednosti[key].push(dodatnaTacka);
+    
     dataSetovi.push({
       label: key,
       data: vrednosti[key],
