@@ -142,9 +142,6 @@ const DozvolaPristupa = (props) => {
       //setAlert(false);
       handleBack(null);
     },3000)
-    // setTimeout(() => {
-    //   setAlert(false);
-    // },4000)
   }
 
   return (
