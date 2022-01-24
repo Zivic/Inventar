@@ -125,24 +125,27 @@ labelArray.push(new Date(Date.now()))
   const dataSetovi = [];
   let index = 0;
   //debugger;
-  for (var key in vrednosti) {
-    let rnd1 = Math.random() * 255;
-    debugger;
-    let broj = vrednosti[key].length -1;
-    let dodatnaTacka = vrednosti[key][broj];
-    let novoX = new Date(Date.now()).toISOString();
-    dodatnaTacka.x = novoX;
-    vrednosti[key].push(dodatnaTacka);
-    
-    dataSetovi.push({
-      label: key,
-      data: vrednosti[key],
-      fill: false,
-      borderColor: niceColors[index],
-      tension: 0,
-    });
-    index++;
+  function ucitajVrednosti(){
+    for (var key in vrednosti) {
+      let rnd1 = Math.random() * 255;
+      //debugger;
+      let broj = vrednosti[key].length -1;
+      let dodatnaTacka = {...vrednosti[key][broj]};
+      let novoX = new Date(Date.now()).toISOString();
+      dodatnaTacka.x = novoX;
+      vrednosti[key].push(dodatnaTacka);
+      
+      dataSetovi.push({
+        label: key,
+        data: vrednosti[key],
+        fill: false,
+        borderColor: niceColors[index],
+        tension: 0,
+      });
+      index++;
+    }
   }
+  //ucitajVrednosti();
 
   const data = {
     labels: labelArray,
@@ -176,6 +179,7 @@ labelArray.push(new Date(Date.now()))
   const korisnikStore = useSelector(selectKorisnik).payload;
   const [podaci, setPodaci] = useState(null);
   useEffect(() => {
+    ucitajVrednosti();
     axios
       .get(
         "http://localhost:3001/api/proizvodi/preduzece/" +
@@ -184,6 +188,7 @@ labelArray.push(new Date(Date.now()))
       .then((res) => {
         console.log(res);
         setPodaci(res.data);
+        
 
         //debugger;
       })
