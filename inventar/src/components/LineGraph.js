@@ -20,7 +20,7 @@ import {
 } from "../features/korisnik/korisnikSlice";
 import axios from "axios";
 
-import { niceColors } from "../Utils";
+import { niceColors, niceColorsOpacity } from "../Utils";
 import { startSession } from "mongoose";
 
 const LineGraph = (props) => {
@@ -134,14 +134,23 @@ labelArray.push(new Date(Date.now()))
       let novoX = new Date(Date.now()).toISOString();
       dodatnaTacka.x = novoX;
       vrednosti[key].push(dodatnaTacka);
-      
+      debugger;
+      let a = niceColors[index];
+      let b = niceColorsOpacity[index];
+
       dataSetovi.push({
         label: key,
         data: vrednosti[key],
-        fill: false,
-        borderColor: niceColors[index],
+        fill: true,
+        borderColor: niceColors[index], 
+        fillColor: niceColorsOpacity[index],
+        strokeColor: niceColors[index],
+        pointColor: niceColors[index],
+        pointStrokeColor: "#202b33",
+        pointHighlightStroke: "rgba(225,225,225,0.9)",
         tension: 0,
       });
+      
       index++;
     }
   }
@@ -155,6 +164,17 @@ labelArray.push(new Date(Date.now()))
     type: "line",
     data,
     options: {
+      pointDotRadius : 6,
+      pointDotStrokeWidth : 2,
+      datasetStrokeWidth : 3,
+      scaleShowVerticalLines: false,
+      scaleGridLineWidth : 2,
+      scaleShowGridLines : false,
+      scaleGridLineColor : "rgba(225, 255, 255, 0.02)",
+      scaleOverride: true,
+      scaleSteps: 9,
+      scaleStepWidth: 500,
+      scaleStartValue: 0,
       responsive: true,
       interaction: {
         mode: "index",
