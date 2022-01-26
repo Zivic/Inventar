@@ -532,9 +532,9 @@ const Proizvod = (props) => {
         <Form.Control.Feedback type="invalid">Looks bad!</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group>
+      {/* <Form.Group>
         <Form.File id="formaProizvodControlFile" label="" hidden />
-      </Form.Group>
+      </Form.Group> */}
 
       <Button variant="primary" type="submit" onClick={(e) => handleSubmit(e)}>
         Potvrdi
