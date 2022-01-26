@@ -2,7 +2,7 @@ import React from "react";
 import MaterialTable from 'material-table';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import {
   setKorisnikData,
@@ -43,7 +43,7 @@ const TabelaProizvoda = (props) => {
         .catch((err) => console.log(err));
     },[])
 
-    const history = useHistory();
+    const history = useNavigate ();
     const handleClick = (idProizvoda) => {
         console.log(idProizvoda)
         handleProizvodSelection(idProizvoda);

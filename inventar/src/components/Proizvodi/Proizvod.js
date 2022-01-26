@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useHistory } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -24,7 +24,7 @@ const Proizvod = (props) => {
 
 
   const korisnikStore = useSelector(selectKorisnik).payload;
-  let history = useHistory();
+  let history = useNavigate ();
 
   let initialValues = null;
 

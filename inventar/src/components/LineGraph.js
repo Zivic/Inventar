@@ -141,9 +141,9 @@ labelArray.push(new Date(Date.now()))
       dataSetovi.push({
         label: key,
         data: vrednosti[key],
-        fill: true,
+        fill: 1,
         borderColor: niceColors[index], 
-        fillColor: niceColorsOpacity[index],
+        backgroundColor: "#000000",
         strokeColor: niceColors[index],
         pointColor: niceColors[index],
         pointStrokeColor: "#202b33",
@@ -155,6 +155,36 @@ labelArray.push(new Date(Date.now()))
     }
   }
   //ucitajVrednosti();
+  var options = {
+    pointDotRadius : 6,
+    pointDotStrokeWidth : 2,
+    datasetStrokeWidth : 3,
+    scaleShowVerticalLines: false,
+    scaleGridLineWidth : 2,
+    scaleShowGridLines : true,
+    scaleGridLineColor : "rgba(225, 255, 255, 0.02)",
+    scaleOverride: true,
+    scaleSteps: 9,
+    scaleStepWidth: 500,
+    scaleStartValue: 0,
+    animation: true,
+    responsive: true,
+    interaction: {
+      mode: "index",
+      intersect: false,
+    },
+    scales: {
+      x: {
+        type: "time",
+        time: {
+         // min: initialTime,
+         // max: new Date(Date.now()),
+          unit: raspon || "hour",
+        },
+      },
+    },
+  }
+
 
   const data = {
     labels: labelArray,
@@ -162,35 +192,8 @@ labelArray.push(new Date(Date.now()))
   };
   const config = {
     type: "line",
-    data,
-    options: {
-      pointDotRadius : 6,
-      pointDotStrokeWidth : 2,
-      datasetStrokeWidth : 3,
-      scaleShowVerticalLines: false,
-      scaleGridLineWidth : 2,
-      scaleShowGridLines : false,
-      scaleGridLineColor : "rgba(225, 255, 255, 0.02)",
-      scaleOverride: true,
-      scaleSteps: 9,
-      scaleStepWidth: 500,
-      scaleStartValue: 0,
-      responsive: true,
-      interaction: {
-        mode: "index",
-        intersect: false,
-      },
-      scales: {
-        x: {
-          type: "time",
-          time: {
-           // min: initialTime,
-           // max: new Date(Date.now()),
-            unit: raspon || "hour",
-          },
-        },
-      },
-    },
+    data: data,
+    options: options,
   };
 
   //Begin:
@@ -216,7 +219,9 @@ labelArray.push(new Date(Date.now()))
 
     //console.log(labelArray);
 
+    //let chart = new Chart(document.getElementById("lineGraph"), config);
     let chart = new Chart(document.getElementById("lineGraph"), config);
+
     return () => chart.destroy();
   }, [props]);
 
