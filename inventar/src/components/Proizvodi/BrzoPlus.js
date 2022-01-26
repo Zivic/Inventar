@@ -3,7 +3,7 @@ import { Form, Button, Alert } from "react-bootstrap";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 
 import {
   setKorisnikData,
@@ -17,7 +17,7 @@ const BrzoPlus = (props) => {
 
   const [alert, setAlert] = useState(null);
   const alertRef = useRef();
-  let history = useHistory();
+  let history = useNavigate ();
 
   const korisnikStore = useSelector(selectKorisnik).payload;
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useState, useRef } from "react";
 import axios from "axios";
-import { useHistory } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 
 import {
   setKorisnikData,
@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const AddNewKategorija = () => {
   const korisnikStore = useSelector(selectKorisnik).payload;
-  let history = useHistory();
+  let history = useNavigate ();
 
 
   const [atributi, setAtributi] = useState([]);

@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useHistory } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -24,7 +24,7 @@ const Proizvod = (props) => {
 
 
   const korisnikStore = useSelector(selectKorisnik).payload;
-  let history = useHistory();
+  let history = useNavigate ();
 
   let initialValues = null;
 
@@ -532,9 +532,9 @@ const Proizvod = (props) => {
         <Form.Control.Feedback type="invalid">Looks bad!</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group>
+      {/* <Form.Group>
         <Form.File id="formaProizvodControlFile" label="" hidden />
-      </Form.Group>
+      </Form.Group> */}
 
       <Button variant="primary" type="submit" onClick={(e) => handleSubmit(e)}>
         Potvrdi

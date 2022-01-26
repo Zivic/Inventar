@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Skladista from "./Skladista/Skladista";
 import Dashboard from "./Dashboard";
 import AddNewKategorija from "./AddNewKategorija";
@@ -14,22 +14,22 @@ import AdminDashboard from "./AdminDashboard";
 const Main = () => {
   return (
     <>
-      <Switch>
-        <Route path="/skladista" component={Skladista} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/home" component={Home} />
-        <Route path="/noviProizvod" component={Proizvod} />
-        <Route path="/novaKategorija" component={AddNewKategorija} />
-        <Route path="/pregledProizvoda" component={PregledProizvoda} />
-        <Route path="/proizvod" component={Proizvod} />
-        <Route path="/menadzerDashboard" component={MenadzerDashboard} />
-        <Route path="/barkod" component={Barkod} />
-        <Route path="/chat" component={Chat} />
-        <Route path="/adminDashboard" component={AdminDashboard} />
+      <Routes>
+        <Route path="/skladista" element={<Skladista/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/home" element={<Home/>} />
+        <Route path="/noviProizvod" element={<Proizvod/>} />
+        <Route path="/novaKategorija" element={<AddNewKategorija/>} />
+        <Route path="/pregledProizvoda" element={<PregledProizvoda/>} />
+        <Route path="/proizvod" element={<Proizvod/>} />
+        <Route path="/menadzerDashboard" element={<MenadzerDashboard/>} />
+        <Route path="/barkod" element={<Barkod/>} />
+        <Route path="/chat" element={<Chat/>} />
+        <Route path="/adminDashboard" element={<AdminDashboard/>} />
 
 
-        <Route exact path="/" component={Skladista} />
-      </Switch>
+        <Route exact path="/" element={<Skladista/>} />
+      </Routes>
     </>
   );
 };
