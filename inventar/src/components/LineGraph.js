@@ -2,6 +2,7 @@ import React from "react";
 import "chartjs-adapter-moment";
 import {
   Chart,
+  Filler,
   ChartConfiguration,
   LineController,
   LineElement,
@@ -27,6 +28,7 @@ const LineGraph = (props) => {
   const { vrednosti, raspon } = props;
 
   Chart.register(
+    Filler,
     LineController,
     LineElement,
     PointElement,
@@ -126,7 +128,15 @@ labelArray.push(new Date(Date.now()))
   let index = 0;
   //debugger;
   function ucitajVrednosti(){
+    var ctx = document.getElementById("lineGraph").getContext("2d");
+    
+
+
+
     for (var key in vrednosti) {
+
+
+      
       let rnd1 = Math.random() * 255;
       //debugger;
       let broj = vrednosti[key].length -1;
@@ -135,20 +145,25 @@ labelArray.push(new Date(Date.now()))
       dodatnaTacka.x = novoX;
       vrednosti[key].push(dodatnaTacka);
       debugger;
+
       let a = niceColors[index];
       let b = niceColorsOpacity[index];
+      const gradientBg = ctx.createLinearGradient(0,0,0,400);
+      gradientBg.addColorStop(0, a);
+      gradientBg.addColorStop(0.5, 'white');
 
       dataSetovi.push({
         label: key,
         data: vrednosti[key],
-        fill: 1,
+        fill: true,
         borderColor: niceColors[index], 
-        backgroundColor: "#000000",
-        strokeColor: niceColors[index],
-        pointColor: niceColors[index],
-        pointStrokeColor: "#202b33",
-        pointHighlightStroke: "rgba(225,225,225,0.9)",
-        tension: 0,
+        backgroundColor: gradientBg,
+        pointBackgroundColor: gradientBg,
+        //strokeColor: niceColors[index],
+        //pointColor: niceColors[index],
+        //pointStrokeColor: "#202b33",
+        //pointHighlightStroke: "rgba(225,225,225,0.9)",
+        tension: 0.1,
       });
       
       index++;
@@ -156,17 +171,18 @@ labelArray.push(new Date(Date.now()))
   }
   //ucitajVrednosti();
   var options = {
-    pointDotRadius : 6,
-    pointDotStrokeWidth : 2,
-    datasetStrokeWidth : 3,
-    scaleShowVerticalLines: false,
-    scaleGridLineWidth : 2,
-    scaleShowGridLines : true,
-    scaleGridLineColor : "rgba(225, 255, 255, 0.02)",
-    scaleOverride: true,
-    scaleSteps: 9,
-    scaleStepWidth: 500,
-    scaleStartValue: 0,
+    // pointDotRadius : 6,
+    // pointDotStrokeWidth : 2,
+    // datasetStrokeWidth : 3,
+    // scaleShowVerticalLines: false,
+    // scaleGridLineWidth : 2,
+    // scaleShowGridLines : true,
+    // scaleGridLineColor : "rgba(225, 255, 255, 0.02)",
+    // scaleOverride: true,
+    // scaleSteps: 9,
+    // scaleStepWidth: 500,
+    // scaleStartValue: 0,
+    fill:true,
     animation: true,
     responsive: true,
     interaction: {
@@ -221,7 +237,7 @@ labelArray.push(new Date(Date.now()))
 
     //let chart = new Chart(document.getElementById("lineGraph"), config);
     let chart = new Chart(document.getElementById("lineGraph"), config);
-
+    
     return () => chart.destroy();
   }, [props]);
 
