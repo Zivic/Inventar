@@ -1,5 +1,15 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import "chartjs-adapter-moment";
+
+import { niceColors, niceColorsOpacity } from "../Utils";
+import {
+  setKorisnikData,
+  selectKorisnik,
+} from "../features/korisnik/korisnikSlice";
+
 import {
   Chart,
   Filler,
@@ -12,17 +22,6 @@ import {
   CategoryScale,
   TimeSeriesScale,
 } from "chart.js";
-import { useState, useEffect } from "react";
-
-import { useSelector, useDispatch } from "react-redux";
-import {
-  setKorisnikData,
-  selectKorisnik,
-} from "../features/korisnik/korisnikSlice";
-import axios from "axios";
-
-import { niceColors, niceColorsOpacity } from "../Utils";
-import { startSession } from "mongoose";
 
 const LineGraph = (props) => {
   const { vrednosti, raspon } = props;
@@ -70,21 +69,37 @@ const LineGraph = (props) => {
 
   const labels = months({ count: 12 });
 
+  let noveVrednosti = {...vrednosti};
+
+  function promeniRaspon(minTime){
+    for(var key in noveVrednosti)
+    noveVrednosti[key] = noveVrednosti[key].filter((vr) => {
+      const date = new Date(vr.x);
+      let res = date > minTime;
+      return res;
+    })
+  }
+
   var initialTime = null;
   switch (raspon) {
     case "hour":
       initialTime = new Date(Date.now());
       initialTime.setDate(initialTime.getDate() - 1);
+      promeniRaspon(initialTime);
       break;
 
     case "day":
       initialTime = new Date(Date.now());
       initialTime.setDate(initialTime.getDate() - 7);
+      promeniRaspon(initialTime);
+
       break;
 
     case "month":
       initialTime = new Date(Date.now());
-      initialTime.setDate(initialTime.getDate() - 31);
+      initialTime.setDate(initialTime.getDate() - 356);
+      promeniRaspon(initialTime);
+
       break;
 
     default:
@@ -96,8 +111,8 @@ const LineGraph = (props) => {
   let labelArray = [];
   // switch(raspon){
   //   case "hour":
-labelArray.push(initialTime)
-labelArray.push(new Date(Date.now()))
+  labelArray.push(initialTime);
+  labelArray.push(new Date(Date.now()));
 
   // let tempTime = initialTime;
   // tempTime.setDate(tempTime.getDate() - 1);
@@ -127,36 +142,32 @@ labelArray.push(new Date(Date.now()))
   const dataSetovi = [];
   let index = 0;
   //debugger;
-  function ucitajVrednosti(){
+  function ucitajVrednosti() {
     var ctx = document.getElementById("lineGraph").getContext("2d");
+
+
+
     
-
-
-
-    for (var key in vrednosti) {
-
-
-      
+    for (var key in noveVrednosti) {
       let rnd1 = Math.random() * 255;
       //debugger;
-      let broj = vrednosti[key].length -1;
-      let dodatnaTacka = {...vrednosti[key][broj]};
+      let broj = noveVrednosti[key].length - 1;
+      let dodatnaTacka = { ...noveVrednosti[key][broj] };
       let novoX = new Date(Date.now()).toISOString();
       dodatnaTacka.x = novoX;
-      vrednosti[key].push(dodatnaTacka);
-      debugger;
+      noveVrednosti[key].push(dodatnaTacka);
 
       let a = niceColors[index];
       let b = niceColorsOpacity[index];
-      const gradientBg = ctx.createLinearGradient(0,0,0,400);
+      const gradientBg = ctx.createLinearGradient(0, 0, 0, 400);
       gradientBg.addColorStop(0, a);
-      gradientBg.addColorStop(0.5, 'white');
+      gradientBg.addColorStop(0.5, "white");
 
       dataSetovi.push({
         label: key,
-        data: vrednosti[key],
+        data: noveVrednosti[key],
         fill: true,
-        borderColor: niceColors[index], 
+        borderColor: niceColors[index],
         backgroundColor: gradientBg,
         pointBackgroundColor: gradientBg,
         //strokeColor: niceColors[index],
@@ -165,7 +176,7 @@ labelArray.push(new Date(Date.now()))
         //pointHighlightStroke: "rgba(225,225,225,0.9)",
         tension: 0.1,
       });
-      
+
       index++;
     }
   }
@@ -182,25 +193,24 @@ labelArray.push(new Date(Date.now()))
     // scaleSteps: 9,
     // scaleStepWidth: 500,
     // scaleStartValue: 0,
-    fill:true,
+    fill: true,
     animation: true,
     responsive: true,
     interaction: {
       mode: "index",
-      intersect: false,
+      intersect: true,
     },
     scales: {
       x: {
         type: "time",
         time: {
-         // min: initialTime,
-         // max: new Date(Date.now()),
+           //min: initialTime,
+           //max: new Date(Date.now()),
           unit: raspon || "hour",
         },
       },
     },
-  }
-
+  };
 
   const data = {
     labels: labelArray,
@@ -227,7 +237,6 @@ labelArray.push(new Date(Date.now()))
       .then((res) => {
         console.log(res);
         setPodaci(res.data);
-        
 
         //debugger;
       })
@@ -237,7 +246,7 @@ labelArray.push(new Date(Date.now()))
 
     //let chart = new Chart(document.getElementById("lineGraph"), config);
     let chart = new Chart(document.getElementById("lineGraph"), config);
-    
+
     return () => chart.destroy();
   }, [props]);
 
