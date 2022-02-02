@@ -159,9 +159,11 @@ const LineGraph = (props) => {
 
       let a = niceColors[index];
       let b = niceColorsOpacity[index];
-      const gradientBg = ctx.createLinearGradient(0, 0, 0, 400);
+      const gradientBg = ctx.createLinearGradient(0, 0, 0, 500);
       gradientBg.addColorStop(0, a);
-      gradientBg.addColorStop(0.5, "white");
+      gradientBg.addColorStop(0.25, b);
+      //gradientBg.addColorStop(0.5, '#00000000');
+
 
       dataSetovi.push({
         label: key,
