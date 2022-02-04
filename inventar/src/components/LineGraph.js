@@ -146,28 +146,9 @@ const LineGraph = (props) => {
   //Begin:
 
   const canvasRef = React.createRef();
-  const korisnikStore = useSelector(selectKorisnik).payload;
-  const [podaci, setPodaci] = useState(null);
   useEffect(() => {
     ucitajVrednosti();
-    axios
-      .get(
-        "http://localhost:3001/api/proizvodi/preduzece/" +
-          korisnikStore.id_preduzeca
-      )
-      .then((res) => {
-        console.log(res);
-        setPodaci(res.data);
-
-        //debugger;
-      })
-      .catch((err) => console.error(err));
-
-    //console.log(labelArray);
-
-    //let chart = new Chart(document.getElementById("lineGraph"), config);
     let chart = new Chart(document.getElementById("lineGraph"), config);
-
     return () => chart.destroy();
   }, [props]);
 
