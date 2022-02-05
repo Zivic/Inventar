@@ -1,19 +1,8 @@
 import React from "react";
-import { useState, useEffect, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
-import "chartjs-adapter-moment";
-
-import { niceColors, niceColorsOpacity } from "../Utils";
-import {
-  setKorisnikData,
-  selectKorisnik,
-} from "../features/korisnik/korisnikSlice";
-
+import { useEffect, useMemo } from "react";
 import {
   Chart,
   Filler,
-  ChartConfiguration,
   LineController,
   LineElement,
   PointElement,
@@ -22,6 +11,9 @@ import {
   CategoryScale,
   TimeSeriesScale,
 } from "chart.js";
+import "chartjs-adapter-moment";
+
+import { niceColors, niceColorsOpacity } from "../Utils";
 
 const LineGraph = (props) => {
   const { vrednosti, raspon } = props;
