@@ -89,6 +89,7 @@ const DonutGraph = (props) => {
 
   return (
     <div
+    className="d-flex"
       style={{
         width: "150px",
         height: "150px",
