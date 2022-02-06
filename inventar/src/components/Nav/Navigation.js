@@ -11,7 +11,8 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 const socket = io("http://localhost:3002");
 
-const Navigation = () => {
+const Navigation = (props) => {
+  const {toggleCollapse} = props;
   const korisnikStore = useSelector(selectKorisnik).payload;
   const imeIPrezime = korisnikStore.ime + " " + korisnikStore.prezime;
 
@@ -43,6 +44,7 @@ const Navigation = () => {
     <>
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="home">Inventar</Navbar.Brand>
+        <Button onClick={() => toggleCollapse()}>collapse</Button>
         <Nav className="mr-auto">
           {/* <Nav.Link href="#home">Home</Nav.Link>
           <Nav.Link href="#features">Features</Nav.Link>
