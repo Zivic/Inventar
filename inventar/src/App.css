@@ -107,6 +107,15 @@ body,
 	-webkit-animation: slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	        animation: slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
+.slide-left {
+	-webkit-animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.slide-out-left {
+	-webkit-animation: slide-out-left 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: slide-out-left 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
 
 .scale-in-tl {
 	-webkit-animation: scale-in-tl 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -118,6 +127,7 @@ body,
 	        animation: scale-out-tl 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 }
 
+/* Animista.net */
 /**
  * ----------------------------------------
  * animation slide-right
@@ -143,6 +153,63 @@ body,
             transform: translateX(100px);
   }
 }
+/**
+ * ----------------------------------------
+ * animation slide-left
+ * ----------------------------------------
+ */
+ @-webkit-keyframes slide-left {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-300px);
+            transform: translateX(-300px);
+  }
+}
+@keyframes slide-left {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-300px);
+            transform: translateX(-300px);
+  }
+}
+
+
+/**
+ * ----------------------------------------
+ * animation slide-out-left
+ * ----------------------------------------
+ */
+ @-webkit-keyframes slide-out-left {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(-1000px);
+            transform: translateX(-1000px);
+    opacity: 0;
+  }
+}
+@keyframes slide-out-left {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(-1000px);
+            transform: translateX(-1000px);
+    opacity: 0;
+  }
+}
+
 
 /**
  * ----------------------------------------
