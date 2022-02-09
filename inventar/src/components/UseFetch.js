@@ -2,31 +2,32 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const useFetch = (props) => {
-  const { url } = props;
+  const  url  = props;
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
+  const controller = new AbortController();
 
   useEffect(() => {
     setLoading("Loading...");
     setData(null);
     setError(null);
-    const source = axios.CancelToken.source();
+    console.log("AAA");
+    console.log(props);
     axios
-      .get(url, { cancelToken: source.token })
+      .get(url, {
+        signal: controller.signal,
+      })
       .then((res) => {
         setLoading(false);
-        //checking for multiple responses for more flexibility
-        //with the url we send in.
-        res.data.content && setData(res.data.content);
-        res.content && setData(res.content);
+        setData(res.data);
       })
       .catch((err) => {
         setLoading(false);
         setError(err);
       });
     return () => {
-      source.cancel();
+      controller.abort();
     };
   }, [url]);
 

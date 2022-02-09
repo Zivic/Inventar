@@ -1,7 +1,6 @@
 import React from "react";
 import MaterialTable from "material-table";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -20,32 +19,23 @@ import GenericModal from "../../features/modal/GenericModal";
 import Dashboard from "../Dashboard";
 import BrzoPlus from "./BrzoPlus";
 import BrzoMinus from "./BrzoMinus";
+import useFetch from "../useFetch";
 
 const TabelaProizvoda = (props) => {
   const { handleProizvodSelection } = props;
-
-  const [proizvodi, setProizvodi] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMode, setModalMode] = useState("Stats");
 
   const korisnikStore = useSelector(selectKorisnik).payload;
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    //dispatch(() => toggle())
-
-    axios
-      .get(
-        "http://localhost:3001/api/proizvodi/preduzece/" +
-          korisnikStore.id_preduzeca
-      )
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        setProizvodi(() => res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const {
+    data: proizvodi,
+    loading,
+    error,
+  } = useFetch(
+    "http://localhost:3001/api/proizvodi/preduzece/" +
+      korisnikStore.id_preduzeca
+  );
 
   const history = useNavigate();
   const handleClick = (idProizvoda) => {
@@ -89,7 +79,10 @@ const TabelaProizvoda = (props) => {
         />
       )}
       tabela
-      {proizvodi ? (
+      {
+      console.log(proizvodi)
+      }
+      {proizvodi && (
         <div style={{ maxWidth: "99%" }}>
           <MaterialTable
             columns={[
@@ -140,9 +133,8 @@ const TabelaProizvoda = (props) => {
             }}
           />
         </div>
-      ) : (
-        <div>Loading...</div>
       )}
+      {loading && <div>Loading...</div>}
     </div>
   );
 };
