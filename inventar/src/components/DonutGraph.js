@@ -2,6 +2,7 @@ import React from "react";
 import {
   Chart,
   ChartConfiguration,
+  Legend,
   LineController,
   LineElement,
   PointElement,
@@ -23,11 +24,11 @@ import axios from "axios";
 import { niceColors } from "../Utils";
 
 const DonutGraph = (props) => {
-
-    const { labels, vrednosti } = props;
+  const { labels, vrednosti } = props;
 
   Chart.register(
     LineController,
+    Legend,
     LineElement,
     PointElement,
     LinearScale,
@@ -36,10 +37,9 @@ const DonutGraph = (props) => {
     DoughnutController,
     ArcElement,
     Tooltip
-
   );
-//['red','blue', 'yellow']
-//[300,50,100]
+  //['red','blue', 'yellow']
+  //[300,50,100]
   const data = {
     labels: labels,
     datasets: [
@@ -47,7 +47,7 @@ const DonutGraph = (props) => {
         label: "My First Dataset",
         data: vrednosti,
         backgroundColor: niceColors,
-        hoverOffset: 4
+        hoverOffset: 4,
       },
     ],
   };
@@ -55,7 +55,14 @@ const DonutGraph = (props) => {
     type: "doughnut",
     data,
     options: {
-      
+      plugins: {
+        legend: {
+            display: false,
+            labels: {
+                color: 'rgb(255, 99, 132)'
+            }
+        }
+    }
     },
   };
 
@@ -77,14 +84,17 @@ const DonutGraph = (props) => {
     //   .catch((err) => console.error(err));
     //console.log(props)
     let chart = new Chart(document.getElementById("donutGraph"), config);
-    return(() => chart.destroy())
+    return () => chart.destroy();
   }, [props]);
 
   return (
-    <div style={{
+    <div
+    className="d-flex"
+      style={{
         width: "150px",
-        height: "150px"
-    }}>
+        height: "150px",
+      }}
+    >
       <canvas id="donutGraph" ref={canvasRef}></canvas>
     </div>
   );

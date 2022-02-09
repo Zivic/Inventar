@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import SkladisteCard from "./SkladisteCard";
 import DonutGraph from "../DonutGraph";
+import SkladistePage from "./SkladistePage";
 
 const Skladista = () => {
   const [mode, setMode] = useState("prikaz");
@@ -43,7 +44,7 @@ const Skladista = () => {
 
   let PrikazJSX = (
     <div className=" row align-items-center">
-      <div className="align-items-center">
+      {/* <div className="align-items-center">
         <DonutGraph
           labels={podaciSkladista?.map((skladiste) => {
             return skladiste.naziv;
@@ -52,8 +53,8 @@ const Skladista = () => {
             return reducerZaBrojProizvoda(skladiste);
           })}
         />
-      </div>
-      <div className="ml-5">
+      </div> */}
+      <div className="row justify-content-around">
         {podaciSkladista.map((skladiste) => {
           return (
             <SkladisteCard
@@ -73,6 +74,11 @@ const Skladista = () => {
             Dodaj skladiste
           </Button>
         )}
+      </div>
+      <div className='flex-column w-100'>
+      {podaciSkladista.map((skladiste) => {
+          return (<SkladistePage {...skladiste}/>)
+      })}
       </div>
     </div>
   );

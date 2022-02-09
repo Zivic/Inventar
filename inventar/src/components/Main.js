@@ -13,7 +13,7 @@ import AdminDashboard from "./AdminDashboard";
 
 const Main = () => {
   return (
-    <>
+  <div className="ml-3 w-100">
       <Routes>
         <Route path="/skladista" element={<Skladista/>} />
         <Route path="/dashboard" element={<Dashboard/>} />
@@ -30,7 +30,7 @@ const Main = () => {
 
         <Route exact path="/" element={<Skladista/>} />
       </Routes>
-    </>
+    </div>
   );
 };
 export default Main;

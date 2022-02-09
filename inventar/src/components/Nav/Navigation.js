@@ -8,10 +8,11 @@ import {
   selectKorisnik,
 } from "../../features/korisnik/korisnikSlice";
 import { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 const socket = io("http://localhost:3002");
 
-const Navigation = () => {
+const Navigation = (props) => {
+  const { toggleCollapse } = props;
   const korisnikStore = useSelector(selectKorisnik).payload;
   const imeIPrezime = korisnikStore.ime + " " + korisnikStore.prezime;
 
@@ -24,17 +25,19 @@ const Navigation = () => {
     });
     socket.emit("joinRoom", korisnikStore.id_preduzeca);
 
-    console.log("ALERTI")
+    console.log("ALERTI");
     axios
-    .get("http://localhost:3001/api/proizvodi/alerti/" + korisnikStore.id_preduzeca)
-    .then((res) => {
-      console.log(res);
-      console.log(res.data);
-      // setPodaciProizvoda(() => res.data);
-      // tempPodaciProizvoda = res.data;
-    })
-    .catch((err) => console.log(err));
-
+      .get(
+        "http://localhost:3001/api/proizvodi/alerti/" +
+          korisnikStore.id_preduzeca
+      )
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        // setPodaciProizvoda(() => res.data);
+        // tempPodaciProizvoda = res.data;
+      })
+      .catch((err) => console.log(err));
 
     return () => socket.disconnect();
   }, []);
@@ -42,6 +45,9 @@ const Navigation = () => {
   return (
     <>
       <Navbar bg="dark" variant="dark">
+        <Button variant = "secondary" className="mr-3" onClick={() => toggleCollapse()}>
+          <i className="fas fa-bars m-auto"></i>
+        </Button>
         <Navbar.Brand href="home">Inventar</Navbar.Brand>
         <Nav className="mr-auto">
           {/* <Nav.Link href="#home">Home</Nav.Link>
