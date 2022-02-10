@@ -1,22 +1,24 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
+import { useState } from "react";
 import AddNewSkladiste from "./AddNewSkladiste";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  setKorisnikData,
-  selectKorisnik,
-} from "../../features/korisnik/korisnikSlice";
-import axios from "axios";
+import { useSelector } from "react-redux";
+import { selectKorisnik } from "../../features/korisnik/korisnikSlice";
 import SkladisteCard from "./SkladisteCard";
-import DonutGraph from "../DonutGraph";
 import SkladistePage from "./SkladistePage";
+import useFetch from "../useFetch";
 
 const Skladista = () => {
   const [mode, setMode] = useState("prikaz");
-  const [podaciSkladista, setPodaciSkladista] = useState([]);
   //redux idpreduzeca
   const korisnikStore = useSelector(selectKorisnik).payload;
+  const {
+    data: podaciSkladista,
+    loading,
+    error,
+  } = useFetch(
+    "http://localhost:3001/api/skladista/" + korisnikStore.id_preduzeca
+  );
 
   const handleDodaj = () => {
     console.log("DODATO");
@@ -29,18 +31,6 @@ const Skladista = () => {
       return acc + cur.kolicina_proizvoda;
     }, 0);
   };
-
-  useEffect(() => {
-    console.log("USEEFFECT AXIOS");
-    axios
-      .get("http://localhost:3001/api/skladista/" + korisnikStore.id_preduzeca)
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        setPodaciSkladista(() => res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   let PrikazJSX = (
     <div className=" row align-items-center">
@@ -55,30 +45,32 @@ const Skladista = () => {
         />
       </div> */}
       <div className="row justify-content-around">
-        {podaciSkladista.map((skladiste) => {
-          return (
-            <SkladisteCard
-              title={skladiste.naziv}
-              subtitle={skladiste.adresa}
-              text1={"default text"}
-              text2={"Različitih proizvoda: " + skladiste.proizvodi.length}
-              text3={
-                "Ukupno proizvoda u skladistu: " +
-                reducerZaBrojProizvoda(skladiste)
-              }
-            />
-          );
-        })}
+        {podaciSkladista &&
+          podaciSkladista.map((skladiste) => {
+            return (
+              <SkladisteCard
+                title={skladiste.naziv}
+                subtitle={skladiste.adresa}
+                text1={"default text"}
+                text2={"Različitih proizvoda: " + skladiste.proizvodi.length}
+                text3={
+                  "Ukupno proizvoda u skladistu: " +
+                  reducerZaBrojProizvoda(skladiste)
+                }
+              />
+            );
+          })}
         {korisnikStore.tip !== "Radnik" && (
           <Button variant="primary" type="" onClick={(e) => handleDodaj(e)}>
             Dodaj skladiste
           </Button>
         )}
       </div>
-      <div className='flex-column w-100'>
-      {podaciSkladista.map((skladiste) => {
-          return (<SkladistePage {...skladiste}/>)
-      })}
+      <div className="flex-column w-100">
+        {podaciSkladista &&
+          podaciSkladista.map((skladiste) => {
+            return <SkladistePage {...skladiste} />;
+          })}
       </div>
     </div>
   );
