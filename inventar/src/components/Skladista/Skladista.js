@@ -10,7 +10,6 @@ import useFetch from "../useFetch";
 
 const Skladista = () => {
   const [mode, setMode] = useState("prikaz");
-  //redux idpreduzeca
   const korisnikStore = useSelector(selectKorisnik).payload;
   const {
     data: podaciSkladista,
