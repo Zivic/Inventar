@@ -130,6 +130,12 @@ const TabelaProizvoda = (props) => {
             options={{
               actionsColumnIndex: -1,
               pageSize: 10,
+              headerStyle:{
+                "font-weight":"bold",
+                "color": "darkgray",
+                "font-size": "1.4em",
+                "fontFamily": "Trebuchet MS",
+              },
             }}
           />
         </div>
