@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { selectKorisnik } from "../../features/korisnik/korisnikSlice";
 import SkladisteCard from "./SkladisteCard";
 import SkladistePage from "./SkladistePage";
-import useFetch from "../useFetch";
+import useFetch from "../../hooks/useFetch";
 
 const Skladista = () => {
   const [mode, setMode] = useState("prikaz");

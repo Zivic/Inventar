@@ -10,7 +10,7 @@ import {
   selectKorisnik,
 } from "../../features/korisnik/korisnikSlice";
 import { Redirect } from "react-router-dom";
-import useFetch from "../useFetch";
+import useFetch from "../../hooks/useFetch";
 
 const BrzoPlus = (props) => {
   const { targetovanProizvod } = props;

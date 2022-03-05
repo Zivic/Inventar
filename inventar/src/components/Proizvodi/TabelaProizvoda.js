@@ -19,7 +19,7 @@ import GenericModal from "../../features/modal/GenericModal";
 import Dashboard from "../Dashboard";
 import BrzoPlus from "./BrzoPlus";
 import BrzoMinus from "./BrzoMinus";
-import useFetch from "../useFetch";
+import useFetch from "../../hooks/useFetch";
 
 const TabelaProizvoda = (props) => {
   const { handleProizvodSelection } = props;

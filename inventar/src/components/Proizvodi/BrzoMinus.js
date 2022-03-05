@@ -9,7 +9,7 @@ import {
   setKorisnikData,
   selectKorisnik,
 } from "../../features/korisnik/korisnikSlice";
-import useFetch from "../useFetch";
+import useFetch from "../../hooks/useFetch";
 
 const BrzoMinus = (props) => {
   const { targetovanProizvod } = props;
