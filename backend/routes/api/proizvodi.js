@@ -235,6 +235,7 @@ router.get("/preduzece/:id", (req, res) => {
     .catch((err) => res.status(404).json({ error: "Not found" }));
 });
 
+
 // @route PUT api/proizvodi/:id
 // @description Update proizvod
 // @access Public

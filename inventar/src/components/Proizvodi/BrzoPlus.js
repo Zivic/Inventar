@@ -3,38 +3,35 @@ import { Form, Button, Alert } from "react-bootstrap";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import {
   setKorisnikData,
   selectKorisnik,
 } from "../../features/korisnik/korisnikSlice";
 import { Redirect } from "react-router-dom";
+import useFetch from "../useFetch";
 
 const BrzoPlus = (props) => {
   const { targetovanProizvod } = props;
-  const [skladista, setSkladista] = useState([]);
 
   const [alert, setAlert] = useState(null);
   const alertRef = useRef();
-  let history = useNavigate ();
+  let history = useNavigate();
 
   const korisnikStore = useSelector(selectKorisnik).payload;
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/api/skladista/" + korisnikStore.id_preduzeca)
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        setSkladista(() => res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const {
+    data: skladista,
+    loading,
+    error,
+  } = useFetch(
+    "http://localhost:3001/api/skladista/" + korisnikStore.id_preduzeca
+  );
 
   const redirect = () => {
-    history.push('/skladista')
-  }
+    history.push("/skladista");
+  };
 
   const getVrednostProizvodaIzSkladista = (skladiste) => {
     //console.log(skladiste);
@@ -70,10 +67,10 @@ const BrzoPlus = (props) => {
     });
 
     return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(kolicinaFromInputs);
-        }, 2000);
-      });
+      setTimeout(() => {
+        resolve(kolicinaFromInputs);
+      }, 2000);
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -99,12 +96,18 @@ const BrzoPlus = (props) => {
         }
       );
 
-      if (parseInt(kolicinaObjekat.kolicina) + novaKolicina[0].kolicina_proizvoda != novaKolicina[0].kolicina_proizvoda) {
+      if (
+        parseInt(kolicinaObjekat.kolicina) +
+          novaKolicina[0].kolicina_proizvoda !=
+        novaKolicina[0].kolicina_proizvoda
+      ) {
         console.log("razlikuje se !");
         console.log(kolicinaObjekat);
         console.log(inicijalnaKolicina);
         debugger;
-        kolicinaObjekat.kolicina =  parseInt(kolicinaObjekat.kolicina) + novaKolicina[0].kolicina_proizvoda;
+        kolicinaObjekat.kolicina =
+          parseInt(kolicinaObjekat.kolicina) +
+          novaKolicina[0].kolicina_proizvoda;
         promene.push({
           //id_korisnika: korisnikStore.id,
           izmenjena_stavka: "kolicina",
@@ -112,11 +115,9 @@ const BrzoPlus = (props) => {
           nova_vrednost: kolicinaObjekat.kolicina,
           naziv_skladista: kolicinaObjekat.naziv,
         });
-      }
-      else{
+      } else {
         kolicinaObjekat.kolicina = novaKolicina[0].kolicina_proizvoda;
       }
-
     });
     console.log(promene);
     debugger;
@@ -126,60 +127,62 @@ const BrzoPlus = (props) => {
     podaci.idProizvoda = targetovanProizvod._id;
 
     const combinedData = {
-        promene: promene,
-        data: podaci,
-        idPreduzeca: idPreduzeca,
-        idKorisnika: korisnikStore.id,
-      };
-      console.log(combinedData);
-      debugger;
-      axios
-        .patch("http://localhost:3001/api/proizvodi/", {
-          headers: { "Content-Type": "application/json" },
-          data: JSON.stringify(combinedData),
-        })
-        .then((res) => {
-          console.log(res)
-          activateAlert("success", "Izmene su uspesno sacuvane!");
-        })
-        .catch((err) => {
-          console.log(err)
-          activateAlert("error", "Doslo je do greske prilikom cuvanja izmena!");
-        });
+      promene: promene,
+      data: podaci,
+      idPreduzeca: idPreduzeca,
+      idKorisnika: korisnikStore.id,
+    };
+    console.log(combinedData);
+    debugger;
+    axios
+      .patch("http://localhost:3001/api/proizvodi/", {
+        headers: { "Content-Type": "application/json" },
+        data: JSON.stringify(combinedData),
+      })
+      .then((res) => {
+        console.log(res);
+        activateAlert("success", "Izmene su uspesno sacuvane!");
+      })
+      .catch((err) => {
+        console.log(err);
+        activateAlert("error", "Doslo je do greske prilikom cuvanja izmena!");
+      });
   };
 
   const activateAlert = (variant, message) => {
     setAlert({
       variant: variant,
-      message: message
+      message: message,
     });
     setTimeout(() => {
-      alertRef.current.className  = alertRef.current.className.replace('scale-in-tl','scale-out-tl');
+      alertRef.current.className = alertRef.current.className.replace(
+        "scale-in-tl",
+        "scale-out-tl"
+      );
       //setAlert(false);
-    },2500)
+    }, 2500);
     setTimeout(() => {
       //setAlert(false);
       redirect();
-    },3000)
-  }
+    }, 3000);
+  };
 
   return (
     <>
-    <div className = 'row'>
-    <h4 className="col-md-5">Trenutna kolicina</h4>
-      <h4 className="col-md-5">Kolicina koju zelite dodati</h4>
-    </div>
+      <div className="row">
+        <h4 className="col-md-5">Trenutna kolicina</h4>
+        <h4 className="col-md-5">Kolicina koju zelite dodati</h4>
+      </div>
 
-
-      {skladista.map((skladiste, index) => {
+      {skladista && skladista.map((skladiste, index) => {
         return (
-          <div className = 'row'>
+          <div className="row">
             <Form.Group
               controlId={"formaProizvodKolicina" + skladiste._id}
               className="col-md-5"
             >
               <Form.Label>
-                 <b>{skladiste.naziv}</b>:{" "}
+                <b>{skladiste.naziv}</b>:{" "}
               </Form.Label>
               <Form.Control
                 className="col-md-5 "
@@ -193,7 +196,7 @@ const BrzoPlus = (props) => {
               className="col-md-5"
             >
               <Form.Label>
-                 <b>{skladiste.naziv}</b>:{" "}
+                <b>{skladiste.naziv}</b>:{" "}
               </Form.Label>
               <Form.Control
                 className="col-md-5"
@@ -206,12 +209,20 @@ const BrzoPlus = (props) => {
         );
       })}
       <div>
-      <Button className = 'float-right'variant="primary" type="submit" onClick={(e) => handleSubmit(e)}>
-        Potvrdi
-      </Button>
+        <Button
+          className="float-right"
+          variant="primary"
+          type="submit"
+          onClick={(e) => handleSubmit(e)}
+        >
+          Potvrdi
+        </Button>
       </div>
-      {alert && <Alert variant={alert.variant} ref = {alertRef} className ='scale-in-tl '>{alert.message}</Alert>}
-
+      {alert && (
+        <Alert variant={alert.variant} ref={alertRef} className="scale-in-tl ">
+          {alert.message}
+        </Alert>
+      )}
     </>
   );
 };
